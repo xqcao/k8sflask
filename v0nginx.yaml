@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-flask
+  labels:
+    name: nginx-flask
+spec:
+  selector:
+    matchLabels:
+      app: nginx-flask
+  replicas: 2 #tell how many pod
+  template:
+    metadata:
+      labels:
+        app: nginx-flask
+    spec:
+      containers:
+        - name: nginx-flask
+          image: bao1/pythonic_medreviewer:latest
+          ports:
+            - containerPort: 3131
+      imagePullSecrets:
+        - name: regcred
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-flask
+spec:
+  selector:
+    app: nginx-flask
+  ports:
+    - protocol: TCP
+      port: 3131
+      targetPort: 3131
+      # nodePort: 31000
+  # type: NodePort
+  type: LoadBalancer
