@@ -18,7 +18,7 @@ spec:
         - name: nginx-flask
           image: bao1/pythonic_medreviewer:latest
           ports:
-            - containerPort: 3131
+            - containerPort: 80
       imagePullSecrets:
         - name: regcred
       restartPolicy: Always
@@ -33,8 +33,8 @@ spec:
     app: nginx-flask
   ports:
     - protocol: TCP
-      port: 3131
-      targetPort: 3131
+      port: 80
+      targetPort: 80
       # nodePort: 31000
   # type: NodePort
   type: LoadBalancer
